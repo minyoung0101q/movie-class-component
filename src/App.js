@@ -8,7 +8,7 @@ const foodILike = [
     name: "Kimchi",
     image:
       "http://aeriskitchen.com/wp-content/uploads/2008/09/kimchi_bokkeumbap_02-.jpg",
-    rating: 5
+
   },
   {
     id: 2,
@@ -33,13 +33,21 @@ const foodILike = [
   }
 ];
 
-function Food({ name, image }) {
+function Food({ name, image, rating }) {
   return (
     <div>
       <h3>I like {name}</h3>
+      <h4>{rating}/5.0</h4>
       <img src={image} alt={name} />
     </div>
   )
+}
+
+// name, image, rating 등의 prop 타입을 확인
+Food.propTypes = {
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  rating: PropTypes.number
 }
 
 function App() {
@@ -50,6 +58,7 @@ function App() {
           key={food.id}
           name={food.name}
           image={food.image}
+          rating={food.rating}
         />)}
     </div>
   )
