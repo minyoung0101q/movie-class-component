@@ -6,7 +6,7 @@ class App extends React.Component {
     }
     add() { // add = () =>
         console.log("add");
-    }; s
+    };
     minus() { // minus = () =>
         console.log("minus");
     }
