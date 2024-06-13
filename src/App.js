@@ -1,36 +1,22 @@
 import React from "react";
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
-        console.log("hello");
+    state = {
+        isLoading: true,
+        movies: []
     }
 
-    state = {
-        count: 0
+    componentDidMount() { // render 호출 후(mounting 후), componentDidMount가 호출됨
+        setTimeout(() => {
+            this.setState({ isLoading: false })
+        }, 6000)
     }
-    add = () => {
-        this.setState(current => ({ count: current.count + 1 }));
-    }
-    minus = () => {
-        this.setState(current => ({ count: current.count - 1 }));
-    }
-    componentDidMount() {
-        console.log("component rendered");
-    }
-    componentDidUpdate() {
-        console.log("I just updated");
-    }
-    componentWillUnmount() {
-        console.log("Goodbye, cruel world");
-    }
+
     render() {
-        console.log("I'm rendering");
+        const { isLoading } = this.state; // 비구조화 할당
         return (
             <div>
-                <h2>This is number : {this.state.count}</h2>
-                <button onClick={this.add}>Add</button>
-                <button onClick={this.minus}>Minus</button>
+                <h2>{isLoading ? "Loading..." : "We are ready"}</h2>
             </div>
         )
     }
