@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/movie_class_component/static/css/main.c1441a4d.css",
+    "main.js": "/movie_class_component/static/js/main.54247e91.js",
+    "index.html": "/movie_class_component/index.html",
+    "main.c1441a4d.css.map": "/movie_class_component/static/css/main.c1441a4d.css.map",
+    "main.54247e91.js.map": "/movie_class_component/static/js/main.54247e91.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c1441a4d.css",
+    "static/js/main.54247e91.js"
+  ]
+}
