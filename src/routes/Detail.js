@@ -1,4 +1,5 @@
 import React from "react";
+import "./Detail.css";
 
 class Detail extends React.Component {
 
@@ -15,7 +16,21 @@ class Detail extends React.Component {
         const { location } = this.props;
         if (location.state) {
             return (
-                <span>{location.state.title}</span>
+                <section className="detail-container">
+                    <div className="detail-movie">
+                        <img src={location.state.poster} alt={location.state.title} title={location.state.title} />
+                        <div className="detail-movie__data">
+                            <h2>{location.state.title}</h2>
+                            <h5>{location.state.year}/{location.state.rating}</h5>
+                            <ul>
+                                {location.state.genres.map(g => (
+                                    <li key={g}>{g}</li>
+                                ))}
+                            </ul>
+                            <p>{location.state.summary}</p>
+                        </div>
+                    </div>
+                </section>
             )
         } else {
             return null;
