@@ -1,41 +1,69 @@
 import React from "react";
-import "./Detail.css";
+import styled from "styled-components";
+import {
+    RatingYear,
+    Summary,
+    Genres,
+    GenresLi,
+    Title,
+    MovieData,
+    Poster
+} from "../styles/sharedStyles";
 
 class Detail extends React.Component {
 
-    componentDidMount() { // state가 undefined 일 때 해결 -> history.push("/") -> url 변경
-        console.log(this.props); // react router가 Detail 컴포넌트한테 props 4개를 넘겨주고, Movie 컴포넌트의 Link 컴포넌트가 state를 전달함
+    componentDidMount() { // 페이지 이동 관련
         const { location, history } = this.props;
-        console.log(location.state);
         if (location.state === undefined) {
             history.push("/");
-        }
+        } // else 라면 그대로 페이지 유지 -> 그래서 코드가 아무것도 없어도 됨
     }
 
-    render() {
+    render() { // 렌더링 관련
+        console.log(this.props);
         const { location } = this.props;
-        if (location.state) {
+
+        if (location.state !== undefined) {
             return (
-                <section className="detail-container">
-                    <div className="detail-movie">
-                        <img src={location.state.poster} alt={location.state.title} title={location.state.title} />
-                        <div className="detail-movie__data">
-                            <h2>{location.state.title}</h2>
-                            <h5>{location.state.year}/{location.state.rating}</h5>
-                            <ul>
+                <DetailContainer>
+                    <MovieComponent>
+                        <Poster src={location.state.poster} title={location.state.title} alt={location.state.title} />
+                        <MovieData>
+                            <Title>{location.state.title}</Title>
+                            <Genres>
                                 {location.state.genres.map(g => (
-                                    <li key={g}>{g}</li>
+                                    <GenresLi key={g}>{g}</GenresLi>
                                 ))}
-                            </ul>
-                            <p>{location.state.summary}</p>
-                        </div>
-                    </div>
-                </section>
+                            </Genres>
+                            <Summary>{location.state.summary.slice(0, 1500)}...</Summary>
+                            <RatingYear>{location.state.rating} / {location.state.year}</RatingYear>
+                        </MovieData>
+                    </MovieComponent>
+                </DetailContainer>
             )
         } else {
             return null;
         }
+
     }
 }
+
+const DetailContainer = styled.div`
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+const MovieComponent = styled.div`
+   display: flex;
+   background-color: ${({ theme }) => theme.colors.white};
+   border-radius: 5px;
+   width: 50%;
+   align-items: flex-start;
+   box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+        0 8px 16px -8px rgba(0, 0, 0, 0.3),
+        0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+`;
 
 export default Detail;

@@ -1,7 +1,7 @@
 import React from "react";
+import styled from "styled-components";
 import axios from "axios";
-import Movie from "../components/Movie";
-import "./Home.css";
+import Movie from "../components/Movie"
 
 class Home extends React.Component {
     state = {
@@ -11,43 +11,72 @@ class Home extends React.Component {
 
     getMovies = async () => {
         const { data: { data: { movies } } } = await axios.get("https://yts.mx/api/v2/list_movies.json?sort_by=rating");
-        console.log(movies); // 받아온 데이터를 movies state에 넣어주고, loading 상태를 false로 변경
-        // 받아온 데이터는 객체로 이루어진 배열
-
-        this.setState({ movies, isLoading: false }); // movies state에 데이터 넣기 / loading 상태 변경
+        console.log(movies); // 객체로 구성된 배열
+        this.setState({ isLoading: false, movies });
     }
 
-    componentDidMount() { // 생명주기 메서드
+    componentDidMount() { // 외부에서 데이터 받아오고, state에 변화 주기
         this.getMovies();
     }
 
     render() {
         const { isLoading, movies } = this.state;
+
         return (
-            <section className="container">
+            <SectionContainer>
                 {isLoading ?
-                    <div className="loader">
-                        <span className="loader__text">Loading...</span>
-                    </div>
+                    <Loader>
+                        <LoaderText>Loading...</LoaderText>
+                    </Loader>
                     :
-                    <div className="movies">
+                    <MovieContainer>
                         {movies.map(movie => (
                             <Movie
                                 key={movie.id}
                                 id={movie.id}
-                                year={movie.year}
-                                rating={movie.rating}
                                 title={movie.title}
                                 summary={movie.summary}
                                 poster={movie.medium_cover_image}
                                 genres={movie.genres}
+                                rating={movie.rating}
+                                year={movie.year}
                             />
                         ))}
-                    </div>
+                    </MovieContainer>
                 }
-            </section>
+
+            </SectionContainer>
         )
     }
 }
+
+const SectionContainer = styled.section`
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 80px;
+`;
+
+const Loader = styled.div`
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+`;
+
+const LoaderText = styled.span`
+    font-weight: 10;
+`;
+
+const MovieContainer = styled.div`
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+`;
+
+
 
 export default Home;
